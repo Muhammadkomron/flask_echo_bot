@@ -41,11 +41,11 @@ USER appuser
 ENV PATH=/home/appuser/.local/bin:$PATH
 
 # Expose port
-EXPOSE 8000
+EXPOSE 80
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=10s --start-period=15s --retries=3 \
-    CMD python -c "import urllib.request; urllib.request.urlopen('http://localhost:8000/health/', timeout=5)" || exit 1
+    CMD python -c "import urllib.request; urllib.request.urlopen('http://localhost:80/health/', timeout=5)" || exit 1
 
 # Use gunicorn for production
-CMD ["python", "-m", "gunicorn", "--bind", "0.0.0.0:8000", "--workers", "2", "--threads", "2", "--timeout", "60", "--max-requests", "1000", "--preload", "wsgi:application"]
+CMD ["python", "-m", "gunicorn", "--bind", "0.0.0.0:80", "--workers", "2", "--threads", "2", "--timeout", "60", "--max-requests", "1000", "--preload", "wsgi:application"]
