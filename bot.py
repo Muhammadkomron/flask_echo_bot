@@ -20,7 +20,7 @@ SECRET_TOKEN = os.getenv('SECRET_TOKEN', 'secret')
 MAX_CONNECTIONS = os.getenv('MAX_CONNECTIONS', 5)
 
 # Initialize
-bot = telebot.TeleBot(BOT_TOKEN)
+bot = telebot.TeleBot(BOT_TOKEN, threaded=False)
 app = Flask(__name__)
 
 
