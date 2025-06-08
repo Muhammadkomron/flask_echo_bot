@@ -15,9 +15,7 @@ logger = logging.getLogger(__name__)
 
 # Get environment variables
 BOT_TOKEN = os.getenv('BOT_TOKEN')
-WEBHOOK_URL = os.getenv('WEBHOOK_URL')
-SECRET_TOKEN = os.getenv('SECRET_TOKEN', 'secret')
-MAX_CONNECTIONS = os.getenv('MAX_CONNECTIONS', 5)
+SECRET_TOKEN = os.getenv('SECRET_TOKEN')
 
 # Initialize
 bot = telebot.TeleBot(BOT_TOKEN, threaded=False)
@@ -49,22 +47,8 @@ def webhook():
 
 @app.route('/health/')
 def health():
-    return {'status': 'ok', 'bot': bot.get_me().username}
+    return {'status': 'healthy', 'bot': bot.get_me().username}
 
-
-# Setup webhook
-def setup_webhook():
-    bot.remove_webhook()
-    result = bot.set_webhook(
-        url=f"{WEBHOOK_URL}/webhook/",
-        secret_token=SECRET_TOKEN,
-        max_connections=MAX_CONNECTIONS,
-    )
-    logger.info(f"Webhook setup: {result}")
-
-
-# Initialize when imported
-setup_webhook()
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=int(os.getenv('PORT', 8000)))
