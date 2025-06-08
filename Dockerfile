@@ -29,7 +29,7 @@ WORKDIR /app
 COPY --from=builder /root/.local /home/appuser/.local
 
 # Copy application code
-COPY --chown=appuser:appgroup bot.py wsgi.py ./
+COPY --chown=appuser:appgroup . .
 
 # Create logs directory
 RUN mkdir -p logs && chown appuser:appgroup logs
